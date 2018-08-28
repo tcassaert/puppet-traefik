@@ -3,7 +3,7 @@
 class traefik::params {
   $install_method    = 'url'
   $download_url_base = 'https://github.com/containous/traefik/releases/download'
-  $version           = '1.0.3'
+  $version           = '1.6.6'
   $archive_dir       = '/opt/puppet-archive'
   $bin_dir           = '/usr/local/bin'
   $max_open_files    = 16384
@@ -22,16 +22,29 @@ class traefik::params {
 
   $os = downcase($::kernel)
 
-  if $::operatingsystem == 'Debian' {
-    if versioncmp($::operatingsystemmajrelease, '8') == 0 {
-      $init_style = 'systemd'
+  case $::osfamily {
+    'Debian': {
+      case $::operatingsystemrelease {
+        /(^7.*|^14\.04.*)/ : {
+          $init_style = 'debian'
+        }
+        default : {
+          $init_style = 'systemd'
+        }
+      }
     }
-  } elsif $::operatingsystem == 'Ubuntu' {
-    if versioncmp($::operatingsystemrelease, '14.04') == 0 {
-      $init_style = 'upstart'
+    'RedHat': {
+      case $::operatingsystemrelease {
+        /^6.*/ : {
+          $init_style = 'redhat'
+        }
+        default : {
+          $init_style = 'systemd'
+        }
+      }
     }
-  }
-  if $init_style == undef {
-    fail('Unsupported OS')
+    default: {
+      fail("Unsupported osfamily ${::osfamily}, currently only supports Debian and RedHat")
+    }
   }
 }
