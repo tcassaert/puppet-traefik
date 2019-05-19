@@ -52,6 +52,6 @@ define traefik::config::section (
   concat::fragment { "traefik_${name}":
     target  => $real_target,
     order   => "${order}-1",
-    content => traefik_toml($real_hash)
+    content => traefik::toml($real_hash)
   }
 }
