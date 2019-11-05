@@ -1,7 +1,7 @@
 # == Class: traefik
 #
 # [*install_method*]
-#   The installation method to use. Possible values: url, none
+#   The installation method to use. Possible values: url, package, none
 #
 # [*download_url_base*]
 #   The base part of the URL to download Traefik from.

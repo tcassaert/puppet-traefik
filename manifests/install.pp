@@ -3,7 +3,7 @@
 # === Parameters
 #
 # [*install_method*]
-#   The installation method to use. Possible values: url, none
+#   The installation method to use. Possible values: url, package, none
 #
 # [*download_url_base*]
 #   The base part of the URL to download Traefik from.
@@ -41,6 +41,7 @@ class traefik::install (
   $install_method    = $traefik::params::install_method,
 
   $download_url_base = $traefik::params::download_url_base,
+  $package_name      = $traefik::params::package_name,
   $version           = $traefik::params::version,
   $os                = $traefik::params::os,
   $arch              = $traefik::params::arch,
@@ -95,6 +96,11 @@ class traefik::install (
         "${bin_dir}/traefik":
           ensure => link,
           target => "${archive_dir}/traefik-${version}/traefik";
+      }
+    }
+    'package': {
+      package { $package_name:
+        ensure => $version,
       }
     }
     'none': {}

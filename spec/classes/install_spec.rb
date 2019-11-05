@@ -156,6 +156,18 @@ describe 'traefik::install' do
         end
       end
 
+      describe 'with install_method "package"' do
+        let(:params) do
+          {
+            version: version,
+            install_method: 'package',
+            package_name: 'traefik-package',
+          }
+        end
+
+        it { is_expected.to contain_package('traefik-package').with_ensure(version) }
+      end
+
       describe 'with install_method "none"' do
         let(:params) do
           {
@@ -189,12 +201,12 @@ describe 'traefik::install' do
       end
 
       describe 'with an unsupported install_method' do
-        let(:params) { { install_method: 'package' } }
+        let(:params) { { install_method: 'rpm' } }
 
         it do
           is_expected.to raise_error(
             Puppet::Error,
-            %r{The provided install method "package" is invalid},
+            %r{The provided install method "rpm" is invalid},
           )
         end
       end
