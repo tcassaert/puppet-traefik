@@ -5,6 +5,7 @@ class traefik::params {
   $download_url_base = 'https://github.com/containous/traefik/releases/download'
   $version           = '1.7.18'
   $archive_dir       = '/opt/puppet-archive'
+  $package_name      = 'traefik'
   $bin_dir           = '/usr/local/bin'
   $max_open_files    = 16384
 
