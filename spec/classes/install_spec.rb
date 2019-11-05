@@ -166,7 +166,6 @@ describe 'traefik::install' do
         end
 
         it { is_expected.to contain_package('traefik-package').with_ensure(version) }
-
       end
 
       describe 'with install_method "none"' do
