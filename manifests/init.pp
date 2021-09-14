@@ -53,6 +53,10 @@
 #
 # [*service_enable*]
 #   The enable value for the service (whether it should be enabled or disabled).
+#
+# [*systemd_workdir*]
+#   Define the systemd WorkingDirectory for the traefik service.
+#   This allows you to put local plugins in a custom directory.
 class traefik (
   $install_method    = $traefik::params::install_method,
   $download_url_base = $traefik::params::download_url_base,
@@ -73,6 +77,8 @@ class traefik (
   $service_ensure    = running,
   $service_enable    = true,
 
+  $systemd_workdir   = $traefik::params::systemd_workdir,
+
 ) inherits traefik::params {
   anchor { 'traefik::begin': }
 
@@ -88,6 +94,7 @@ class traefik (
     max_open_files    => $max_open_files,
     init_style        => $init_style,
     config_path       => "${config_dir}/${config_file}",
+    systemd_workdir   => $systemd_workdir,
     notify            => Class['traefik::service'],
   }
 
