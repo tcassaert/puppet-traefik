@@ -37,6 +37,10 @@
 #   The path to the config file that Traefik should load on startup. By default,
 #   Traefik looks in a few places for a config file. This is described in its
 #   documentation.
+#
+# [*systemd_workdir*]
+#   Define the systemd WorkingDirectory for the traefik service.
+#   This allows you to put local plugins in a custom directory.
 class traefik::install (
   $install_method    = $traefik::params::install_method,
 
@@ -54,6 +58,8 @@ class traefik::install (
 
   $init_style        = $traefik::params::init_style,
   $config_path       = undef,
+
+  $systemd_workdir    = $traefik::params::systemd_workdir
 ) inherits traefik::params {
 
   validate_integer($max_open_files)
