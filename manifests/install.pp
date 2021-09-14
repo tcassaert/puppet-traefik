@@ -59,7 +59,7 @@ class traefik::install (
   $init_style        = $traefik::params::init_style,
   $config_path       = undef,
 
-  $systemd_workdir    = $traefik::params::systemd_workdir
+  $systemd_workdir   = $traefik::params::systemd_workdir
 ) inherits traefik::params {
 
   validate_integer($max_open_files)
