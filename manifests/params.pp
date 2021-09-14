@@ -12,6 +12,8 @@ class traefik::params {
   $config_dir        = '/etc/traefik'
   $config_file       = 'traefik.toml'
 
+  $systemd_workdir   = undef
+
   case $::architecture {
     'x86_64', 'amd64': { $arch = 'amd64' }
     'i386':            { $arch = '386'   }
